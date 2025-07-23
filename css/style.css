@@ -1,117 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>ProfessionalIT Tutorials</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
+/* style.css */
 
-        /* Header 1: Top nav */
-        .top-header {
-            background-color: #222;
-            color: #fff;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
 
-        .top-header a {
-            color: #fff;
-            margin: 0 10px;
-            text-decoration: none;
-        }
+.top-header {
+  background-color: #222;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-        /* Header 2: Subject nav */
-        .subject-header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-        }
+.top-header a {
+  color: #fff;
+  margin: 0 10px;
+  text-decoration: none;
+}
 
-        .subject-header a {
-            color: white;
-            margin-right: 20px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+.subject-header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+}
 
-        /* Layout */
-        .container {
-            display: flex;
-        }
+.subject-header a {
+  color: white;
+  margin-right: 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
 
-        .sidenav {
-            width: 250px;
-            background-color: #f2f2f2;
-            padding: 20px;
-            height: calc(100vh - 100px); /* Adjusted for headers */
-            overflow-y: auto;
-        }
+.container {
+  display: flex;
+}
 
-        .sidenav a {
-            display: block;
-            margin-bottom: 10px;
-            color: #333;
-            text-decoration: none;
-        }
+.sidenav {
+  width: 250px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  /* Calculate height based on viewport height minus header heights */
+  height: calc(100vh - 100px); /* Adjust 100px based on actual header heights */
+  overflow-y: auto;
+  display: none; /* Hidden by default, shown when a subject is selected */
+}
 
-        .main-content {
-            flex-grow: 1;
-            padding: 20px;
-        }
+.sidenav a {
+  display: block;
+  margin-bottom: 10px;
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+}
 
-        .main-content h1 {
-            font-size: 24px;
-        }
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+}
 
-    </style>
-</head>
-<body>
+.main-content h1 {
+  font-size: 24px;
+}
 
-    <!-- Top Header -->
-    <div class="top-header">
-        <div>
-            <a href="#">Home</a>
-            <a href="#">Training</a>
-            <a href="#">Contact</a>
-        </div>
-        <div>Call: +91-XXXXXXXXXX</div>
-    </div>
-
-    <!-- Subject Header -->
-    <div class="subject-header">
-        <a href="#">HTML</a>
-        <a href="#">CSS</a>
-        <a href="#">JavaScript</a>
-        <a href="#">Core Java</a>
-        <a href="#">Spring Boot</a>
-        <a href="#">DevOps</a>
-    </div>
-
-    <!-- Layout: Sidebar + Content -->
-    <div class="container">
-        <div class="sidenav">
-            <strong>Spring Boot Topics</strong>
-            <a href="#">Introduction</a>
-            <a href="#">Setup</a>
-            <a href="#">Annotations</a>
-            <a href="#">RestController</a>
-            <a href="#">Dependency Injection</a>
-            <a href="#">Spring Data JPA</a>
-            <a href="#">Spring Security</a>
-            <a href="#">Actuator</a>
-            <a href="#">Swagger Integration</a>
-        </div>
-
-        <div class="main-content">
-            <h1>Spring Boot - Introduction</h1>
-            <p>Spring Boot is an open-source Java-based framework used to create stand-alone, production-grade Spring-based applications.</p>
-        </div>
-    </div>
-
-</body>
-</html>
+pre {
+  background-color: #eee;
+  padding: 10px;
+  overflow-x: auto;
+  border-radius: 5px; /* Added for better aesthetics */
+}
