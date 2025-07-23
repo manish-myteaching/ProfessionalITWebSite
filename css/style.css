@@ -1,55 +1,117 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #f4f4f4;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ProfessionalIT Tutorials</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
 
-header {
-  background: #333;
-  color: white;
-  padding: 1rem;
-  text-align: center;
-}
+        /* Header 1: Top nav */
+        .top-header {
+            background-color: #222;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.container {
-  display: flex;
-}
+        .top-header a {
+            color: #fff;
+            margin: 0 10px;
+            text-decoration: none;
+        }
 
-nav {
-  width: 200px;
-  background: #222;
-  padding: 1rem;
-  min-height: 90vh;
-}
+        /* Header 2: Subject nav */
+        .subject-header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+        }
 
-nav ul {
-  list-style: none;
-  padding: 0;
-}
+        .subject-header a {
+            color: white;
+            margin-right: 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-nav ul li {
-  margin: 10px 0;
-}
+        /* Layout */
+        .container {
+            display: flex;
+        }
 
-nav ul li a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
+        .sidenav {
+            width: 250px;
+            background-color: #f2f2f2;
+            padding: 20px;
+            height: calc(100vh - 100px); /* Adjusted for headers */
+            overflow-y: auto;
+        }
 
-nav ul li a:hover {
-  text-decoration: underline;
-}
+        .sidenav a {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            text-decoration: none;
+        }
 
-main {
-  flex: 1;
-  padding: 2rem;
-  background: white;
-}
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
 
-footer {
-  background: #333;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-}
+        .main-content h1 {
+            font-size: 24px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Top Header -->
+    <div class="top-header">
+        <div>
+            <a href="#">Home</a>
+            <a href="#">Training</a>
+            <a href="#">Contact</a>
+        </div>
+        <div>Call: +91-XXXXXXXXXX</div>
+    </div>
+
+    <!-- Subject Header -->
+    <div class="subject-header">
+        <a href="#">HTML</a>
+        <a href="#">CSS</a>
+        <a href="#">JavaScript</a>
+        <a href="#">Core Java</a>
+        <a href="#">Spring Boot</a>
+        <a href="#">DevOps</a>
+    </div>
+
+    <!-- Layout: Sidebar + Content -->
+    <div class="container">
+        <div class="sidenav">
+            <strong>Spring Boot Topics</strong>
+            <a href="#">Introduction</a>
+            <a href="#">Setup</a>
+            <a href="#">Annotations</a>
+            <a href="#">RestController</a>
+            <a href="#">Dependency Injection</a>
+            <a href="#">Spring Data JPA</a>
+            <a href="#">Spring Security</a>
+            <a href="#">Actuator</a>
+            <a href="#">Swagger Integration</a>
+        </div>
+
+        <div class="main-content">
+            <h1>Spring Boot - Introduction</h1>
+            <p>Spring Boot is an open-source Java-based framework used to create stand-alone, production-grade Spring-based applications.</p>
+        </div>
+    </div>
+
+</body>
+</html>
