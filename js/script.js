@@ -353,16 +353,48 @@ const subjects = {
   }
 };
 
-// Function to show general content (Home, Training, Contact)
 function showContent(page) {
-  document.getElementById('sidebar').style.display = 'none'; // Hide sidebar
-  const contentMap = {
-    home: `<h1>Home</h1><p>Welcome to the ProfessionalIT tutorial platform. Explore various subjects and topics to enhance your skills.</p>`,
-    training: `<h1>Training</h1><p>Our training modules cover a wide range of technologies, from foundational concepts to advanced enterprise solutions. Contact us for custom training programs.</p>`,
-    contact: `<h1>Contact</h1><p>Reach out to us at <a href="mailto:contact@professionalit.com">contact@professionalit.com</a> for inquiries or support.</p>`
+  const sidebar = document.getElementById('sidebar');
+  const mainContent = document.getElementById('main-content');
+
+  sidebar.style.display = 'none'; // Hide sidebar
+
+  const pagePaths = {
+    home: 'content/homee/home.html',
+    training: 'content/training/training.html',
+    contact: 'content/contact/contact.html'
   };
-  document.getElementById('main-content').innerHTML = contentMap[page] || '<h1>Page Not Found</h1><p>The requested content could not be loaded.</p>';
+
+  if (pagePaths[page]) {
+    mainContent.innerHTML = `<h2>Loading ${capitalize(page)}...</h2><p>Please wait.</p>`;
+    
+    fetch(pagePaths[page])
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+      })
+      .then(html => {
+        mainContent.innerHTML = html;
+      })
+      .catch(error => {
+        console.error(`Failed to load ${page} content:`, error);
+        mainContent.innerHTML = `
+          <h2>Error Loading ${capitalize(page)}</h2>
+          <p>Could not load the ${page} page. Please try again later.</p>
+        `;
+      });
+  } else {
+    mainContent.innerHTML = `<h1>Page Not Found</h1><p>The requested content could not be loaded.</p>`;
+  }
 }
+
+// Helper to capitalize the page title
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 
 // Function to show subject-specific content and populate sidebar
 function showSubject(subject) {
@@ -498,3 +530,16 @@ async function loadTopicContent(subject, encodedMainTopic, encodedSubTopic) {
 document.addEventListener('DOMContentLoaded', () => {
   showContent('home');
 });
+
+
+ function loadTrainingDetail(batch) {
+    fetch(`content/training/${batch}-batch-details/${batch}-batch-detail.html`)
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('training-detail-container').innerHTML = html;
+        window.scrollTo(0, document.getElementById('training-detail-container').offsetTop);
+      });
+  }
+
+
+
