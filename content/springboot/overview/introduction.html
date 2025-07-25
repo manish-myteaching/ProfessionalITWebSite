@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spring Boot Overview</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .main-title {
+      font-size: 28px;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      margin-top: 20px;
+      color: #34495e;
+    }
+
+    p {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    pre {
+      background-color: #eee;
+      padding: 12px;
+      border-left: 4px solid #4CAF50;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="main-title">Introduction to Spring Boot</h1>
+
+  <p><strong>Spring Boot</strong> is an open-source Java-based framework used to create microservices and stand-alone production-ready applications with minimal effort.</p>
+
+  <h2 class="section-title">⚙️ Key Features:</h2>
+  <ul>
+    <li>Auto Configuration</li>
+    <li>Standalone and Production-ready</li>
+    <li>Opinionated Defaults</li>
+    <li>Embedded Servers (Tomcat, Jetty)</li>
+    <li>Spring Boot Starters</li>
+    <li>Spring Boot Actuator</li>
+  </ul>
+
+  <h2 class="section-title">📦 Spring Boot Starter</h2>
+  <p>Starters are a set of convenient dependency descriptors. Example:</p>
+  <pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+  <h2 class="section-title">🚀 Create a Simple Application</h2>
+  <pre><code>@SpringBootApplication
+public class MyApp {
+  public static void main(String[] args) {
+    SpringApplication.run(MyApp.class, args);
+  }
+}</code></pre>
+
+  <h2 class="section-title">🔧 application.properties</h2>
+  <pre><code>server.port=8081
+spring.datasource.url=jdbc:mysql://localhost:3306/db
+spring.datasource.username=root
+</code></pre>
+
+  <h2 class="section-title">✅ Run the Application</h2>
+  <p>You can run the app using:</p>
+  <pre><code>mvn spring-boot:run</code></pre>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!-- content/training.html -->
+<h1>Our Training Programs</h1>
+<p>Choose from our top industry-ready training modules:</p>
+
+<div style="display: flex; gap: 20px; flex-wrap: wrap;">
+  <div style="border: 1px solid #ccc; padding: 15px; width: 300px;">
+    <h3>SBMS Project Batch</h3>
+    <p>Spring Boot Microservices with complete project deployment.</p>
+    <button onclick="loadTrainingDetail('sbms')">View Details</button>
+  </div>
+
+  <div style="border: 1px solid #ccc; padding: 15px; width: 300px;">
+    <h3>JRTP Project Batch</h3>
+    <p>Java Real Time Project for beginners to intermediate level.</p>
+    <button onclick="loadTrainingDetail('jrtp')">View Details</button>
+  </div>
+
+  <div style="border: 1px solid #ccc; padding: 15px; width: 300px;">
+    <h3>DevOps with CI/CD</h3>
+    <p>Master Jenkins, Docker, Kubernetes, GitHub Actions & more.</p>
+    <button onclick="loadTrainingDetail('devops')">View Details</button>
+  </div>
+</div>
+
+<hr>
+<div id="training-detail-container"></div>
+

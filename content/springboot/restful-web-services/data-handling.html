@@ -1,0 +1,45 @@
+<h2>RESTful Web Services: Data Handling</h2>
+<p>In Spring Boot RESTful services, data is typically exchanged in JSON format. Spring Boot, with Jackson library, handles the automatic conversion between Java objects and JSON.</p>
+<h3>Request Body (<code>@RequestBody</code>):</h3>
+<p>Used to bind the HTTP request body to a method parameter. This is common for <code>POST</code> and <code>PUT</code> requests where clients send data to the server.</p>
+<pre>
+@PostMapping("/products")
+public Product createProduct(@RequestBody Product newProduct) {
+    // newProduct object is automatically populated from JSON in request body
+    return productService.saveProduct(newProduct);
+}
+</pre>
+<h3>Response Body (<code>@ResponseBody</code> / <code>@RestController</code>):</h3>
+<p>When a method in a <code>@RestController</code> returns a Java object, Spring Boot automatically converts it to JSON (or XML) and writes it to the HTTP response body.</p>
+<pre>
+@GetMapping("/products/{id}")
+public Product getProductById(@PathVariable Long id) {
+    // Product object is automatically converted to JSON in response
+    return productService.getProductById(id);
+}
+</pre>
+<h3>Error Handling:</h3>
+<p>Spring Boot provides robust mechanisms for handling exceptions in REST APIs, such as <code>@ControllerAdvice</code> and <code>@ExceptionHandler</code>.</p>
+<pre>
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<String> handleProductNotFound(ProductNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(
+        MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+}
+</pre>
+<p>This ensures consistent error responses for clients.</p>

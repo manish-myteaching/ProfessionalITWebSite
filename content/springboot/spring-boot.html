@@ -1,0 +1,19 @@
+<h2>Spring Boot</h2>
+<p>Spring Boot simplifies the development of production-ready Spring applications. It takes an opinionated view of the Spring platform and third-party libraries so you can get started with minimum fuss.</p>
+<h3>Key Features:</h3>
+<ul>
+    <li>**Auto-configuration:** Automatically configures your Spring application based on the JARs on your classpath.</li>
+    <li>**Embedded Servers:** Allows you to run your application as a standalone JAR with embedded Tomcat, Jetty, or Undertow.</li>
+    <li>**Starter Dependencies:** Provides convenient dependency descriptors to simplify your build configuration.</li>
+    <li>**Production-ready features:** Includes externalized configuration, health checks, metrics, etc.</li>
+</ul>
+<h3>Example Main Class:</h3>
+<pre>
+@SpringBootApplication
+public class MySpringBootApplication {
+  public static void main(String[] args) {
+    SpringApplication.run(MySpringBootApplication.class, args);
+  }
+}
+</pre>
+<p>The <code>@SpringBootApplication</code> annotation is a convenience annotation that adds: <code>@Configuration</code>, <code>@EnableAutoConfiguration</code>, and <code>@ComponentScan</code>.</p>
