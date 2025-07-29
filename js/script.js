@@ -362,7 +362,8 @@ function showContent(page) {
   const pagePaths = {
     home: 'content/homee/home.html',
     training: 'content/training/training.html',
-    contact: 'content/contact/contact.html'
+    contact: 'content/contact/contact.html',
+    batchnotes: 'content/batch-details/batch-details.html'
   };
 
   if (pagePaths[page]) {
@@ -377,6 +378,10 @@ function showContent(page) {
       })
       .then(html => {
         mainContent.innerHTML = html;
+
+        if (page === 'batchnotes') {
+          initNotesManager(); // Only now the uploadForm exists
+        }
       })
       .catch(error => {
         console.error(`Failed to load ${page} content:`, error);
@@ -528,7 +533,7 @@ async function loadTopicContent(subject, encodedMainTopic, encodedSubTopic) {
 
 // Initialize the page with home content when loaded
 document.addEventListener('DOMContentLoaded', () => {
-  showContent('home');
+    showContent('home');
 });
 
 
@@ -542,4 +547,58 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
+function initNotesManager() {
+  const form = document.getElementById("uploadForm");
+  const topicInput = document.getElementById("topicInput");
+  const noteFile = document.getElementById("noteFile");
+  const tableBody = document.querySelector("#notesTable tbody");
+  const preview = document.getElementById("preview");
 
+  const notes = [];
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const topic = topicInput.value.trim();
+    const file = noteFile.files[0];
+
+    if (!topic || !file) {
+      alert("Both topic and file are required.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const content = e.target.result;
+
+      const blob = new Blob([content], { type: "text/plain" });
+      const blobUrl = URL.createObjectURL(blob);
+
+      const note = {
+        topic,
+        filename: file.name,
+        content,
+        blobUrl,
+      };
+
+      notes.push(note);
+      const index = notes.length;
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${index}</td>
+        <td>${topic}</td>
+        <td><a href="${note.blobUrl}" download="${file.name}">Download</a></td>
+      `;
+
+      row.addEventListener("click", () => {
+        preview.textContent = note.content;
+      });
+
+      tableBody.appendChild(row);
+      form.reset();
+    };
+
+    reader.readAsText(file);
+  });
+}
