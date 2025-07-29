@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Notes Manager</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fdfdfd;
+    }
+
+    h1 {
+      color: #2c3e50;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"], input[type="file"] {
+      padding: 8px;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 10px;
+      font-size: 1rem;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      cursor: pointer;
+      width: 150px;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+      cursor: pointer;
+    }
+
+    #preview {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #aaa;
+      height: 400px;
+      overflow-y: auto;
+      background-color: #fafafa;
+      white-space: pre-wrap;
+    }
+  </style>
+
+</head>
+<body>
+  <h1>📁 Upload Notes with Topics</h1>
+
+  <form id="uploadForm">
+    <input type="text" id="topicInput" placeholder="Enter topic name" required />
+    <input type="file" id="noteFile" accept=".txt" required />
+    <button type="submit">Upload Note</button>
+  </form>
+
+  <table id="notesTable">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Topic</th>
+        <th>Download</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div id="preview">
+    <em>📌 Click a topic to preview the note content here.</em>
+  </div>
+</body>
+ <script src="js/script.js"></script>
+</html>

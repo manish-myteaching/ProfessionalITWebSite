@@ -150,6 +150,7 @@ const topicContentPaths = {
   batchnotes: {
     "Spring Boot&MicorServices": {
       "PISBMS04": "content/batch-details/batch-details.html",
+      "PISBMS05": "content/dailynotes/pisbms04/pisbms05.html"
     }
   }
 };
@@ -547,7 +548,11 @@ async function loadTopicContent(subject, encodedMainTopic, encodedSubTopic) {
       }
       const content = await response.text();
       mainContentDiv.innerHTML = content;
-      initNotesManager();
+      if (document.getElementById("uploadForm")) {
+        initNotesManager();
+      }
+
+
     } catch (error) {
       console.error("Error loading topic content:", error);
       mainContentDiv.innerHTML = `
@@ -566,7 +571,7 @@ async function loadTopicContent(subject, encodedMainTopic, encodedSubTopic) {
 // Initialize the page with home content when loaded
 document.addEventListener('DOMContentLoaded', () => {
   showContent('home');
-  
+
 
 });
 
@@ -636,3 +641,120 @@ function initNotesManager() {
     reader.readAsText(file);
   });
 }
+
+
+const CLIENT_ID = '316459236679-br1oq57b11k58t89qag0h5i3k3jlpglm.apps.googleusercontent.com'; // Replace with your OAuth client ID
+const API_KEY = 'YOUR_API_KEY'; // Replace with your API Key
+const SCOPES = 'https://www.googleapis.com/auth/documents https://www.googleapis.com/auth/drive.file';
+
+const notes = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+  gapi.load('client:auth2', initClient);
+
+  document.getElementById('uploadForm').addEventListener('submit', handleUpload);
+});
+
+function initClient() {
+  gapi.client.init({
+    apiKey: API_KEY,
+    clientId: CLIENT_ID,
+    discoveryDocs: ['https://docs.googleapis.com/$discovery/rest?version=v1'],
+    scope: SCOPES
+  }).then(() => {
+    console.log('✅ Google API initialized');
+    if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
+      gapi.auth2.getAuthInstance().signIn();
+    }
+  }, error => {
+    console.error('❌ Google API initialization failed:', error);
+  });
+}
+
+async function ensureSignedIn() {
+  const auth = gapi.auth2.getAuthInstance();
+  if (!auth.isSignedIn.get()) {
+    await auth.signIn();
+  }
+}
+
+async function handleUpload() {
+
+
+  const topicInput = document.getElementById("topicInput");
+  const noteFile = document.getElementById("noteFile");
+  const topic = topicInput.value.trim();
+  const file = noteFile.files[0];
+
+  if (!topic || !file) {
+    alert("Both topic and file are required.");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = async function (e) {
+    const content = e.target.result;
+
+    try {
+      await ensureSignedIn();
+
+      const doc = await gapi.client.docs.documents.create({
+        title: topic
+      });
+
+      const documentId = doc.result.documentId;
+
+      await gapi.client.docs.documents.batchUpdate({
+        documentId,
+        requests: [{
+          insertText: {
+            location: { index: 1 },
+            text: content
+          }
+        }]
+      });
+
+      alert(`📄 Google Doc created: https://docs.google.com/document/d/${documentId}`);
+
+      addNoteToTable(topic, file.name, content);
+      document.getElementById("uploadForm").reset();
+
+    } catch (err) {
+      console.error("Error uploading to Google Docs:", err);
+      alert("❌ Failed to create Google Doc.");
+    }
+  };
+  reader.readAsText(file);
+}
+
+function addNoteToTable(topic, filename, content) {
+  const tableBody = document.querySelector("#notesTable tbody");
+  const preview = document.getElementById("preview");
+
+  const blob = new Blob([content], { type: "text/plain" });
+  const blobUrl = URL.createObjectURL(blob);
+
+  const note = {
+    topic,
+    filename,
+    content,
+    blobUrl
+  };
+
+  notes.push(note);
+  const index = notes.length;
+
+  const row = document.createElement("tr");
+  row.innerHTML = `
+        <td>${index}</td>
+        <td>${topic}</td>
+        <td><a href="${note.blobUrl}" download="${filename}">Download</a></td>
+      `;
+
+  row.addEventListener("click", () => {
+    preview.textContent = note.content;
+  });
+
+  tableBody.appendChild(row);
+}
+
