@@ -146,6 +146,11 @@ const topicContentPaths = {
       "Document Databases": "content/database/nosql/document.html",
       "Key-Value Stores": "content/database/nosql/key-value.html"
     }
+  },
+  batchnotes: {
+    "Spring Boot&MicorServices": {
+      "PISBMS04": "content/batch-details/batch-details.html",
+    }
   }
 };
 
@@ -180,26 +185,34 @@ const subjects = {
   corejava: {
     title: "Core Java Topics",
     topics: [
-      { name: "OOP" ,subtopics: [
+      {
+        name: "OOP", subtopics: [
           "Introduction",
           "Setup",
           "Project Structure"
-      ]},
-      { name: "Collections",subtopics: [
+        ]
+      },
+      {
+        name: "Collections", subtopics: [
           "Introduction",
           "Setup",
           "Project Structure"
-      ] },
-      { name: "Multithreading",subtopics: [
+        ]
+      },
+      {
+        name: "Multithreading", subtopics: [
           "Introduction",
           "Setup",
           "Project Structure"
-      ] },
-      { name: "Exception Handling",subtopics: [
+        ]
+      },
+      {
+        name: "Exception Handling", subtopics: [
           "Introduction",
           "Setup",
           "Project Structure"
-      ] }
+        ]
+      }
     ]
   },
   springboot: {
@@ -350,6 +363,28 @@ const subjects = {
         ]
       }
     ]
+  },
+  batchnotes: {
+    title: "ProfessionalIT Batces notes",
+    topics: [
+      {
+        name: "Spring Boot&MicorServices",
+        subtopics: [
+          "PISBMS04",
+          "PISBMS05",
+          "PISBMS06"
+        ]
+      },
+      {
+        name: "DevOps",
+        subtopics: [
+          "PIDEVOPS1",
+          "PIDEVOPS2",
+          "PIDEVOPS3",
+        ]
+      },
+
+    ]
   }
 };
 
@@ -362,13 +397,12 @@ function showContent(page) {
   const pagePaths = {
     home: 'content/homee/home.html',
     training: 'content/training/training.html',
-    contact: 'content/contact/contact.html',
-    batchnotes: 'content/batch-details/batch-details.html'
+    contact: 'content/contact/contact.html'
   };
 
   if (pagePaths[page]) {
     mainContent.innerHTML = `<h2>Loading ${capitalize(page)}...</h2><p>Please wait.</p>`;
-    
+
     fetch(pagePaths[page])
       .then(response => {
         if (!response.ok) {
@@ -378,10 +412,6 @@ function showContent(page) {
       })
       .then(html => {
         mainContent.innerHTML = html;
-
-        if (page === 'batchnotes') {
-          initNotesManager(); // Only now the uploadForm exists
-        }
       })
       .catch(error => {
         console.error(`Failed to load ${page} content:`, error);
@@ -411,6 +441,7 @@ function showSubject(subject) {
   sidebar.style.display = 'block'; // Show sidebar
 
   const selected = subjects[subject];
+
 
   if (selected) {
     // Use the subject's title property or generate one
@@ -516,6 +547,7 @@ async function loadTopicContent(subject, encodedMainTopic, encodedSubTopic) {
       }
       const content = await response.text();
       mainContentDiv.innerHTML = content;
+      initNotesManager();
     } catch (error) {
       console.error("Error loading topic content:", error);
       mainContentDiv.innerHTML = `
@@ -533,18 +565,20 @@ async function loadTopicContent(subject, encodedMainTopic, encodedSubTopic) {
 
 // Initialize the page with home content when loaded
 document.addEventListener('DOMContentLoaded', () => {
-    showContent('home');
+  showContent('home');
+  
+
 });
 
 
- function loadTrainingDetail(batch) {
-    fetch(`content/training/${batch}-batch-details/${batch}-batch-detail.html`)
-      .then(response => response.text())
-      .then(html => {
-        document.getElementById('training-detail-container').innerHTML = html;
-        window.scrollTo(0, document.getElementById('training-detail-container').offsetTop);
-      });
-  }
+function loadTrainingDetail(batch) {
+  fetch(`content/training/${batch}-batch-details/${batch}-batch-detail.html`)
+    .then(response => response.text())
+    .then(html => {
+      document.getElementById('training-detail-container').innerHTML = html;
+      window.scrollTo(0, document.getElementById('training-detail-container').offsetTop);
+    });
+}
 
 
 function initNotesManager() {
